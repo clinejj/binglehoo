@@ -13,7 +13,6 @@
     <link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/redmond/jquery-ui.css" rel="stylesheet" /> 
     <link type="text/css" href="css/bootstrap.min.css" rel="stylesheet"/>
     <link type="text/css" href="css/bootstrap-responsive.min.css" rel="stylesheet">
-    <link type="text/css" href="css/styles.css" rel="stylesheet"/>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -21,11 +20,13 @@
   </head>
 
   <body>
+  <div style="text-align:center">
   <h1>binglehoo</h1>
+  </div>
   <div class="container">
-  <div id="srchform">
+  <div id="srchform" style="text-align:center">
     <form id="qryform" name="route" onSubmit='JavaScript:return false;' class="form-inline">
-      <label>search: <input id="query" type="text" name="query" size="200" /></label>
+      <label>search: <input id="query" type="text" name="query"/></label>
       <input id="gobtn" type="submit" name="search" value="search" onClick="doSearch(this.form)" class="btn btn-primary"/>
   	</form>
   </div>
