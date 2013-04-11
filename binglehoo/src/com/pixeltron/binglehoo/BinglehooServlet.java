@@ -8,12 +8,18 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Vector;
 
 import javax.servlet.http.*;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import com.google.appengine.labs.repackaged.org.json.JSONArray;
+import com.google.appengine.labs.repackaged.org.json.JSONException;
+import com.google.appengine.labs.repackaged.org.json.JSONObject;
 
 @SuppressWarnings("serial")
 public class BinglehooServlet extends HttpServlet {
@@ -30,17 +36,77 @@ public class BinglehooServlet extends HttpServlet {
 		String yqry = Y_URL;
 		yqry = yqry.replace("?p=", "?p=" + qry);
 		
-		
+		Vector<Query> results = new Vector<Query>();
+		Vector<Query> gResults = new Vector<Query>();
+		Vector<Query> yResults = new Vector<Query>();
+		String strRes = "";
 		
 		String gresp = executePost(gqry,"");
     	if (gresp != null) {
-    		gresp = gresp.substring(gresp.indexOf("{"), gresp.lastIndexOf("}"));
-    		resp.getWriter().println(gresp);
+    		gresp = gresp.substring(gresp.indexOf("{"), gresp.lastIndexOf("}")) + "}";
+    		JSONObject gresults;
+			try {
+				gresults = new JSONObject(gresp);
+				JSONArray arr = (JSONArray) gresults.get("results");
+				for (int i=0;i<arr.length();i++) {
+					JSONObject cur = arr.getJSONObject(i);
+					Query newCur = new Query();
+					newCur.content = (String) cur.get("content");
+					newCur.title = (String) cur.get("title");
+					newCur.title = "G - " + newCur.title;
+					newCur.visibleUrl = (String) cur.get("visibleUrl");
+					newCur.url = (String) cur.get("url");
+					gResults.add(newCur);
+				}
+			} catch (JSONException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+    		//resp.getWriter().println(strRes);
     	}
     	
     	Document doc = Jsoup.connect(yqry).get();
-    	Elements newsHeadlines = doc.select("#web");
-    	resp.getWriter().println(newsHeadlines.toString());
+    	Element content = doc.getElementById("web");
+    	Elements links = content.getElementsByTag("li");
+    	for (int i=0;i<links.size();i++) {
+    		Element cur = links.get(i);
+    		Query newCur = new Query();
+			newCur.content = cur.getElementsByClass("abstr").toString();
+			newCur.title = cur.getElementsByTag("a").get(0).text();
+			newCur.title = "Y - " + newCur.title;
+			newCur.visibleUrl = cur.getElementsByClass("url").toString();
+			newCur.url = cur.getElementsByTag("a").get(0).attr("href");
+			yResults.add(newCur);
+    	}
+    	
+    	if (gResults.size() <= yResults.size()) {
+    		int count = 0;
+    		for (int i=0;i<gResults.size();i++)
+    		{
+    			results.add(gResults.get(i));
+    			results.add(yResults.get(i));
+    			count = i;
+    		}
+    		for (int i=count;i<yResults.size();i++) {
+    			results.add(yResults.get(i));
+    		}
+    	} else {
+    		int count = 0;
+    		for (int i=0;i<yResults.size();i++)
+    		{
+    			results.add(gResults.get(i));
+    			results.add(yResults.get(i));
+    			count = i;
+    		}
+    		for (int i=count;i<gResults.size();i++) {
+    			results.add(gResults.get(i));
+    		}
+    	}
+    	
+    	for (int i=0;i<results.size();i++) {
+    		strRes = strRes + results.get(i).toHTML();
+    	}
+    	resp.getWriter().println(strRes);
 
     }
     
