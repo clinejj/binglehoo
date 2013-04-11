@@ -9,19 +9,28 @@
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>Hello App Engine</title>
+    <title>binglehoo</title>
+    <link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/redmond/jquery-ui.css" rel="stylesheet" /> 
+    <link type="text/css" href="css/bootstrap.min.css" rel="stylesheet"/>
+    <link type="text/css" href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link type="text/css" href="css/styles.css" rel="stylesheet"/>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/binglehoo.js"></script>
   </head>
 
   <body>
-    <h1>Hello App Engine!</h1>
-	
-    <table>
-      <tr>
-        <td colspan="2" style="font-weight:bold;">Available Servlets:</td>        
-      </tr>
-      <tr>
-        <td><a href="binglehoo">Binglehoo</a></td>
-      </tr>
-    </table>
+  <h1>binglehoo</h1>
+  <div class="container">
+  <div id="srchform">
+    <form id="qryform" name="route" onSubmit='JavaScript:return false;' class="form-inline">
+      <label>search: <input id="query" type="text" name="query" size="200" /></label>
+      <input id="gobtn" type="submit" name="search" value="search" onClick="doSearch(this.form)" class="btn btn-primary"/>
+  	</form>
+  </div>
+  <div id="results">
+  </div>
+  </div>
   </body>
 </html>
