@@ -25,8 +25,6 @@ import com.google.appengine.labs.repackaged.org.json.JSONObject;
 public class BinglehooServlet extends HttpServlet {
 	private static final String G_URL = "https://www.google.com/uds/GwebSearch?callback=google.search.WebSearch.RawCompletion&rsz=small&hl=en&source=gsc&gss=.com&sig=dafe20cc2afc0dcfa10b802f251c72d0&&q=&gl=www.google.com&oq=bing&gs_l=partner.12...0.0.2.14400.0.0.0.0.0.0.0.0..0.0.gsnos%2Cn%3D13..0.0.0..1ac.&qid=13dfa707f45f9643&context=1&key=notsupplied&v=1.0&nocache=1365706268260";
 	private static final String Y_URL = "http://search.yahoo.com/search;_ylt=Ag2rqzK7vv6CsmRCVSecZ16bvZx4?p=&toggle=1&cop=mss&ei=UTF-8&fr=yfp-t-900";
-	private static final String bingAcctKey = "wNsZUMQ6/Kws4zgDAgTSPR9c80hZkvCVFihcs+KNRvg=";
-	private static final String bingRootUri = "https://api.datamarket.azure.com/Bing/Search";
 	
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
 		throws IOException {
